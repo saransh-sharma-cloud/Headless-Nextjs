@@ -1,0 +1,171 @@
+/* tailwind.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes shake {
+  16.65% {
+    transform: translateX(8px);
+  }
+
+  33.3% {
+    transform: translateX(-6px);
+  }
+  49.95% {
+    transform: translateX(4px);
+  }
+  66.6% {
+    transform: translateX(-2px);
+  }
+  83.25% {
+    transform: translateX(1px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@layer utilities {
+  .img-fluid {
+    width: 100%;
+    height: 100%;
+    /* border-radius: 25px; */
+  }
+}
+
+.img-fluid:hover {
+  animation: shake 0.5s;
+}
+
+:root {
+  /* --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255; */
+  font-family: var(--font-family-base, "Plus Jakarta Sans", sans-serif);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+.product-image-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+}
+
+.normal-image,
+.hover-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  background-color: #f5f5f5;
+}
+
+.hover-image {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+ .product-image-container:hover .hover-image {
+  opacity: 1;
+}
+
+
+.product-image-container:hover .normal-image {
+  opacity: 1;
+} 
+
+.color-swatch {
+  margin-top: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin: 0 7px;
+  cursor: pointer;
+}
+
+.view-all-button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid black;
+  border-radius: 20px;
+  color: black;
+  font-weight: bold;
+  text-transform: none;
+  cursor: pointer;
+}
+.view-all-icon {
+  /* display: inline-block; */
+  /* padding: 10px; */
+  /* border: 1px solid black; */
+  color: black;
+  font-weight: bold;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.view-all-button:hover {
+  background-color: black;
+  color: white;
+}
+
+.view-all-icon:hover {
+  background-color: black;
+  color: white;
+}
+
+.add-to-cart-button {
+  background-color: black;
+  color: white;
+  text-transform: none;
+  padding: 14px 20px;
+  box-shadow: none;
+  font-size: 14px;
+  font-weight: 600;
+  width: 100%;
+}
+
+.discount-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #d81717;
+  color: white;
+  padding: 5px;
+  border-radius: 15px;
+  overflow: hidden;
+  font-size: 12px;
+}
+
+.tabButton {
+  text-transform: none;
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 25px;
+}
+
+.tabButton:hover {
+  color: #000000;
+}
