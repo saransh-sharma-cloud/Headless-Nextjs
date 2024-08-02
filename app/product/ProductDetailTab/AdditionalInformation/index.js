@@ -18,7 +18,7 @@ const AdditionalInformation = ({ product }) => {
             style={{
               border: "1px solid #ddd",
               padding: "16px 30px",
-              fontWeight: "bold",
+              fontWeight: "bold", 
             }}
           >
             Color
