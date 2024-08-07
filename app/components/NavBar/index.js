@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useState, useRef } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,14 +16,19 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { Button, Container, Modal, Switch } from "@mui/material";
 import Register from "@/app/Login";
+import { useRouter } from "next/navigation";
 
 const pages = ["Home", "Shop", "Products", "Blog", "Page"];
 
 export default function NavBar({ toggleDarkMode, darkMode }) {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [hoverHome, setHoverHome] = useState(false);
+
+  const hoverTimeout = useRef(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -50,6 +56,20 @@ export default function NavBar({ toggleDarkMode, darkMode }) {
 
   const handleCloseModal = () => {
     setOpenModal(false);
+  };
+
+  const handleMouseEnter = () => {
+    clearTimeout(hoverTimeout.current);
+    setHoverHome(true);
+  };
+
+  const handleMouseLeave = () => {
+    hoverTimeout.current = setTimeout(() => setHoverHome(false), 10000);
+  };
+
+  const handlePageNavigation = (path) => {
+    router.push(path);
+    handleCloseNavMenu();
   };
 
   const menuId = "primary-search-account-menu";
@@ -89,7 +109,10 @@ export default function NavBar({ toggleDarkMode, darkMode }) {
       onClose={handleMobileMenuClose}
     >
       {pages?.map((page) => (
-        <MenuItem key={page} onClick={handleCloseNavMenu}>
+        <MenuItem
+          key={page}
+          onClick={() => handlePageNavigation(`/${page.toLowerCase()}`)}
+        >
           <Typography textAlign="center">{page}</Typography>
         </MenuItem>
       ))}
@@ -101,7 +124,6 @@ export default function NavBar({ toggleDarkMode, darkMode }) {
       <AppBar position="sticky" sx={{ pb: "10px" }}>
         <Container maxWidth="xl">
           <Toolbar sx={{ py: "10px" }}>
-            {" "}
             <Typography
               variant="h6"
               noWrap
@@ -130,7 +152,10 @@ export default function NavBar({ toggleDarkMode, darkMode }) {
               }}
             >
               {pages?.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem
+                  key={page}
+                  onClick={() => handlePageNavigation(`/${page.toLowerCase()}`)}
+                >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -139,42 +164,36 @@ export default function NavBar({ toggleDarkMode, darkMode }) {
               {pages?.map((page) => (
                 <Button
                   key={page}
-                  onClick={handleCloseNavMenu}
+                  onClick={() => handlePageNavigation(`/${page.toLowerCase()}`)}
                   sx={{
                     my: 4,
                     color: darkMode ? "#ffffff" : "#000000",
                     display: "block",
                   }}
+                  onMouseEnter={() => page === "Home" && handleMouseEnter()}
+                  onMouseLeave={() => page === "Home" && handleMouseLeave()}
                 >
                   {page}
                 </Button>
               ))}
             </Box>
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <IconButton
-                size="large"
-                aria-label="show 4 new mails"
-                color="inherit"
-              >
+              <IconButton size="large" aria-label="search" color="inherit">
                 <Badge badgeContent={0} color="error">
                   <SearchIcon />
                 </Badge>
               </IconButton>
               <IconButton
                 size="large"
-                aria-label="show 17 new notifications"
+                aria-label="user profile"
                 color="inherit"
                 onClick={handleOpenModal}
               >
                 <Badge badgeContent={0} color="error">
-                  <PersonOutlineIcon/>
+                  <PersonOutlineIcon />
                 </Badge>
               </IconButton>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                color="inherit"
-              >
+              <IconButton size="large" aria-label="favorites" color="inherit">
                 <Badge badgeContent={0} color="error">
                   <FavoriteBorderIcon />
                 </Badge>
@@ -182,7 +201,7 @@ export default function NavBar({ toggleDarkMode, darkMode }) {
 
               <IconButton
                 size="large"
-                aria-label="show add to cart"
+                aria-label="shopping cart"
                 color="inherit"
               >
                 <Badge
@@ -218,6 +237,7 @@ export default function NavBar({ toggleDarkMode, darkMode }) {
             </Box>
           </Toolbar>
         </Container>
+        {/* <HoverMenu open={hoverHome} handleClose={() => setHoverHome(false)} />{" "} */}
       </AppBar>
       {renderMobileMenu}
       {renderMenu}

@@ -1,12 +1,11 @@
 import React from "react";
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import {Grid } from "@mui/material";
 import CarouselComponent from "./home/Carousel";
 import Categories from "./home/Categories";
 import Bestseller from "./home/BestSeller";
 import Comfort from "./home/Comfort";
 import Quotes from "./home/Quotes";
 import SectionThird from "./home/SectionThird";
-import ProductDetail from "./product/[slug]/page";
 
 export default function Home() {
   return (
