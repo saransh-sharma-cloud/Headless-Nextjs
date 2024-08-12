@@ -186,8 +186,11 @@ const page = ({ params }) => {
                 gutterBottom
                 sx={{ color: "#8a8a8a" }}
               >
-                {product?.description ||
-                  "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."}
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: product?.shortDescription,
+                  }}
+                />
               </Typography>{" "}
             </Grid>
             <Grid item xs={12}>

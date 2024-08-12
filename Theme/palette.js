@@ -7,43 +7,46 @@ const typography = {
     fontSize: "30px",
     fontWeight: 700,
     lineHeight: 1.2,
-    marginBottom: "1rem",
   },
   h2: {
     fontSize: "35px",
     fontWeight: 600,
     lineHeight: 1.2,
-    marginBottom: "1rem",
   },
   h3: {
     fontSize: "22px",
     fontWeight: 500,
     lineHeight: 1.2,
-    marginBottom: "1rem",
+  },
+  h4: {
+    fontSize: "18px",
+    fontWeight: 600,
+    lineHeight: 1.2,
+  },
+  h5: {
+    fontSize: "14px",
+    fontWeight: 500,
+    lineHeight: 1.2,
   },
   h6: {
     fontSize: "16px",
     fontWeight: 600,
     lineHeight: 1.2,
-    marginBottom: "1rem",
   },
   body1: {
     fontSize: "16px",
     fontWeight: 400,
     lineHeight: 1.5,
-    marginBottom: "1rem",
   },
   body3: {
     fontSize: "20px",
     fontWeight: 700,
     lineHeight: 1.5,
-    marginBottom: "1rem",
   },
   body4: {
     fontSize: "14px",
     fontWeight: 400,
     lineHeight: 1.5,
-    marginBottom: "1rem",
   },
 };
 
@@ -82,6 +85,26 @@ const lightTheme = createTheme({
         },
       },
     },
+    MuiSlider: {
+      styleOverrides: {
+        root: {
+          color: "#000",
+        },
+        thumb: {
+          color: "#000",
+        },
+        rail: {
+          color: "#d6d6d6", 
+        },
+        track: {
+          color: "#000", 
+        },
+        valueLabel: {
+          backgroundColor: "#000", 
+          color: "#fff",
+        },
+      },
+    },
   },
 });
 
@@ -105,11 +128,31 @@ const darkTheme = createTheme({
         root: {
           "& .MuiOutlinedInput-root": {
             borderRadius: "20px",
-            backgroundColor:"#fff",
+            backgroundColor: "#fff",
             "& .MuiOutlinedInput-notchedOutline": {
               border: `1px solid #fff`,
             },
           },
+        },
+      },
+    },
+    MuiSlider: {
+      styleOverrides: {
+        root: {
+          color: "#fff",
+        },
+        thumb: {
+          color: "#fff",
+        },
+        rail: {
+          color: "#888",
+        },
+        track: {
+          color: "#fff",
+        },
+        valueLabel: {
+          backgroundColor: "#fff",
+          color: "#000",
         },
       },
     },

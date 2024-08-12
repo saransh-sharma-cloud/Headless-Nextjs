@@ -23,3 +23,27 @@ export const calculateDiscountPercentage = (regularPrice, salePrice) => {
   const discount = ((regularPriceNum - salePriceNum) / regularPriceNum) * 100;
   return Math.round(discount);
 };
+
+
+export const getInitialPrice = (item) => {
+  if (item?.type === "VARIABLE" && item?.variations?.edges.length > 0) {
+    const { price, regularPrice, onSale } = item.variations.edges[0].node;
+    return {
+      price,
+      regularPrice,
+      onSale,
+      discountPercentage: onSale
+        ? calculateDiscountPercentage(regularPrice, price)
+        : null,
+    };
+  }
+  const { price, regularPrice, onSale } = item;
+  return {
+    price,
+    regularPrice,
+    onSale,
+    discountPercentage: onSale
+      ? calculateDiscountPercentage(regularPrice, price)
+      : null,
+  };
+};

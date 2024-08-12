@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import {Grid } from "@mui/material";
 import CarouselComponent from "./home/Carousel";
@@ -6,8 +7,12 @@ import Bestseller from "./home/BestSeller";
 import Comfort from "./home/Comfort";
 import Quotes from "./home/Quotes";
 import SectionThird from "./home/SectionThird";
+import { GET_PRODUCT_ITEM } from "@/lib/queries";
+import { useQuery } from "@apollo/client";
 
 export default function Home() {
+    const { data, loading } = useQuery(GET_PRODUCT_ITEM);
+
   return (
     <>
       <CarouselComponent
@@ -26,7 +31,7 @@ export default function Home() {
           <SectionThird />
         </Grid>
         <Grid item xs={12}>
-          <Bestseller />
+          <Bestseller data={data} loading={loading} />
         </Grid>
         <Grid item xs={12}>
           <Comfort />
