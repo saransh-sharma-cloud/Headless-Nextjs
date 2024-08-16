@@ -1,16 +1,33 @@
-import React from "react";
-import { Box, Typography, Button, Grid } from "@mui/material";
-import Link from "next/link";
+import React, { useState } from "react";
+import { Box, Typography, Button, Grid, Link } from "@mui/material";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { mapColors } from "@/app/utils";
+import AddToCart from "../AddToCart";
 
 const ProductSlide = ({
   item,
   selectedImages,
   selectedPrices,
-  handleColorChange,
+  handleColorChange
 }) => {
-  const currentPrice = selectedPrices[item?.id] || item.initialPrice;
+  const [open, setOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedImage, setSelectedImage] = useState("");
+
+  console.log(selectedProduct, "selectedProduct");
+
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
+
+  const handleAddToCartClick = () => {
+    setSelectedProduct(item);
+    setSelectedImage(selectedImages[item?.id] || item.featuredImage?.node?.mediaItemUrl);
+    toggleDrawer(true)();
+  };
+
+
+  const currentPrice = selectedPrices[item?.id] || item?.initialPrice;
   const primaryImage =
     selectedImages[item?.id] || item.featuredImage?.node?.mediaItemUrl;
   const secondaryImage = item?.variations?.edges[1]?.node?.image?.mediaItemUrl;
@@ -18,7 +35,7 @@ const ProductSlide = ({
   return (
     <Box sx={{ textAlign: "center" }}>
       <Box className="product-image-container">
-        {currentPrice.onSale && (
+        {currentPrice?.onSale && (
           <Grid className="discount-badge">
             {currentPrice?.discountPercentage}% off
           </Grid>
@@ -40,8 +57,9 @@ const ProductSlide = ({
                 variant="contained"
                 size="small"
                 className="add-to-cart-button"
+                onClick={handleAddToCartClick}
               >
-                Add To Cart{" "}
+                Add To Cart
                 <ShoppingBagOutlinedIcon sx={{ marginLeft: "5px" }} />
               </Button>
             </Box>
@@ -87,10 +105,10 @@ const ProductSlide = ({
                     onClick={() =>
                       handleColorChange(
                         item?.id,
-                        variationEdge?.node.image.mediaItemUrl,
-                        variationEdge.node.price,
-                        variationEdge.node.regularPrice,
-                        variationEdge.node.onSale
+                        variationEdge?.node?.image?.mediaItemUrl,
+                        variationEdge?.node?.price,
+                        variationEdge?.node?.regularPrice,
+                        variationEdge?.node?.onSale
                       )
                     }
                   />
@@ -100,6 +118,7 @@ const ProductSlide = ({
           </div>
         ))}
       </Grid>
+      <AddToCart open={open} onClose={toggleDrawer(false)} selectedProduct={selectedProduct} selectedImage={selectedImage} />
     </Box>
   );
 };

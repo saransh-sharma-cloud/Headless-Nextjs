@@ -14,6 +14,8 @@ const Bestseller = ({ data, loading, showHeader = true, useSwiper = true }) => {
   const [selectedImages, setSelectedImages] = useState({});
   const [selectedPrices, setSelectedPrices] = useState({});
 
+  console.log(data,"data")
+
   const products = data?.products?.edges?.map((edge) => edge?.node);
   const productsWithDiscount = products?.map((item) => ({
     ...item,
@@ -88,9 +90,15 @@ const Bestseller = ({ data, loading, showHeader = true, useSwiper = true }) => {
         ) : (
           <Grid container spacing={2}>
             {loading ? (
-              <CustomSkeleton />
+              <Grid container direction="row" spacing={2} m={0}>
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <Grid item xs={12} sm={6} md={4} key={index}>
+                    <CustomSkeleton height={365} />
+                  </Grid>
+                ))}
+              </Grid>
             ) : (
-              productsWithDiscount.map((item) => (
+              productsWithDiscount?.map((item) => (
                 <ProductGrid
                   key={item.id}
                   item={item}
@@ -106,6 +114,5 @@ const Bestseller = ({ data, loading, showHeader = true, useSwiper = true }) => {
     </Container>
   );
 };
-
 export default Bestseller;
 
